@@ -96,7 +96,7 @@ export function statusBtnLoadMore(page, totalHits) {
       messageColor: 'white', // blue, red, 
       backgroundColor: color,
       position: 'topRight',
-      iconUrl: './../img/error_outline.svg',
+      iconUrl: './error_outline.svg',
       iconColor: 'white',
     })
   }
