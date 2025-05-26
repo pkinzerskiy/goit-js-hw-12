@@ -20,7 +20,9 @@ hideLoader()
 function processingBtn(event) {
     event.preventDefault();
     clearGallery();
-
+    if (page) {
+        hideLoadMoreButton();
+    }
     query = event.target.elements.searchText.value.trim();
     
     if (query.match(/^\u0020{0,}$/)) {
