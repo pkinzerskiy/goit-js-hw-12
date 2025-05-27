@@ -13,7 +13,8 @@ loadMore.addEventListener("click", loadMoreBtn);
 
 let query;
 let page;
-let totalHits = 0;
+// let totalHits = 0;
+const PER_PAGE = 15;
 
 hideLoader()
 
@@ -32,15 +33,16 @@ function processingBtn(event) {
     }
     showLoader();
     page = 1;
-    getQuery(query, page);
+    getQuery({query, page, PER_PAGE});
+    createLightBox();
 }
 
-async function getQuery(query, page) {
+async function getQuery({query, page, PER_PAGE}) {
 
-        try {
-            const response = await getImagesByQuery(query, page);
+    try {
+        const response = await getImagesByQuery({ query, page, PER_PAGE });
             let data = response.data.hits;
-            totalHits = (response.data.totalHits);
+            let totalHits = (response.data.totalHits);
             
             if (!response.data.hits.length) {    
                 hideLoader();
@@ -49,9 +51,7 @@ async function getQuery(query, page) {
             }
             hideLoader();
             let markup = createGallery(data);
-            container.insertAdjacentHTML('beforeend', markup);
-            createLightBox();
-            statusBtnLoadMore(page, totalHits);
+            statusBtnLoadMore({ page, totalHits, PER_PAGE });
          
         }
         catch (error) {
@@ -68,7 +68,7 @@ function loadMoreBtn(event) {
     ++page;
     hideLoadMoreButton();
     showLoader();
-    getQuery(query, page);
+    getQuery({query, page, PER_PAGE});
 }
 
 function scroll() {

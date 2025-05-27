@@ -2,13 +2,11 @@
 
 import axios from "axios";
 const myKey = "49810610-79c0179868d457ece08d99a45";
+// import { PER_PAGE } from "./../main.js";
 
-export const PER_PAGE = 15;
-
-
-export function getImagesByQuery(query, page) {
-    // console.log("query",query );
-   return axios("https://pixabay.com/api/", {
+export async function getImagesByQuery({query, page, PER_PAGE}) {
+    console.log("query",PER_PAGE );
+   return await axios("https://pixabay.com/api/", {
         params: {
             key: myKey,
             q: query,

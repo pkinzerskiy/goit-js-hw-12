@@ -10,11 +10,11 @@ const container = document.querySelector(".gallery");
 // приймає масив images, створювати HTML-розмітку для галереї, додавати її в контейнер галереї та викликати метод екземпляра SimpleLightbox refresh(). Нічого не повертає.
 const load = document.querySelector("span");
 const loadMore = document.querySelector(".load_more");
-// const btnMore = document.querySelector("");
-import {PER_PAGE} from "./pixabay-api.js";;
+
+//import { PER_PAGE } from "./../main.js";
 
 export function createGallery(images) {
-  return images
+  let markup = images
     .map(
       ({
         webformatURL,
@@ -49,6 +49,7 @@ export function createGallery(images) {
 </li>`
     )
     .join('');
+    container.insertAdjacentHTML('beforeend', markup);
 };
 
 export function createLightBox() {
@@ -72,7 +73,7 @@ export function hideLoader() {
   load.classList.remove('loader');  
 };
 
-export function statusBtnLoadMore(page, totalHits) {
+export function statusBtnLoadMore({ page, totalHits, PER_PAGE } ) {
   let totalPage = Math.ceil(totalHits / PER_PAGE);
   if (totalPage > page) {
     showLoadMoreButton();
