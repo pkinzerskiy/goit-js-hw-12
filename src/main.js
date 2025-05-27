@@ -1,7 +1,7 @@
 "use strict";
 
 import { getImagesByQuery } from "./js/pixabay-api.js";
-import { createGallery, clearGallery, showLoader, hideLoader, createLightBox, statusBtnLoadMore, hideLoadMoreButton, message} from './js/render-functions.js';
+import { createGallery, clearGallery, showLoader, hideLoader, statusBtnLoadMore, hideLoadMoreButton, message} from './js/render-functions.js';
 
 const form = document.querySelector("form");
 form.addEventListener("submit", processingBtn);
@@ -34,32 +34,34 @@ function processingBtn(event) {
     showLoader();
     page = 1;
     getQuery({query, page, PER_PAGE});
-    createLightBox();
 }
 
 async function getQuery({query, page, PER_PAGE}) {
 
     try {
         const response = await getImagesByQuery({ query, page, PER_PAGE });
-            let data = response.data.hits;
-            let totalHits = (response.data.totalHits);
+            let data = response.hits;
+            let totalHits = (response.totalHits);
             
-            if (!response.data.hits.length) {    
+        if (!data.length) {   
                 hideLoader();
                 message('Sorry, there are no images matching your search query. Please try again!', 'red');
                 return;
             }
             hideLoader();
-            let markup = createGallery(data);
+            createGallery(data);         
             statusBtnLoadMore({ page, totalHits, PER_PAGE });
-         
+            // createLightBox();
         }
-        catch (error) {
-            console.log(error.message);
+    catch (error) {
+        hideLoader();
+        message(error.message, "red");
     };
+    
     if (page > 1) {
         scroll();
-    }
+    } 
+    
     form.reset();
 }
 

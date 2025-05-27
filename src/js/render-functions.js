@@ -11,7 +11,11 @@ const container = document.querySelector(".gallery");
 const load = document.querySelector("span");
 const loadMore = document.querySelector(".load_more");
 
-//import { PER_PAGE } from "./../main.js";
+const galleryLightBox = new SimpleLightbox('.gallery li a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
+
 
 export function createGallery(images) {
   let markup = images
@@ -49,16 +53,9 @@ export function createGallery(images) {
 </li>`
     )
     .join('');
-    container.insertAdjacentHTML('beforeend', markup);
-};
-
-export function createLightBox() {
-  let galleryLightBox = new SimpleLightbox('.gallery li a', {
-    captionsData: 'alt',
-    captionDelay: 250,
-  });
+  container.insertAdjacentHTML('beforeend', markup);
   galleryLightBox.refresh();
-}
+};
 
 // нічого не приймає та повинна очищати вміст контейнера галереї. Нічого не повертає.
 export function clearGallery() {
@@ -79,14 +76,14 @@ export function statusBtnLoadMore({ page, totalHits, PER_PAGE } ) {
     showLoadMoreButton();
   } else {
     hideLoadMoreButton();
-    message("We're sorry, but you've reached the end of search results.", 'blue');
+    message("We're sorry, but you've reached the end of search results.", 'green');
   }
 }
-
+// функція нічого не приймає, повинна додавати клас для відображення кнопки Load more. Нічого не повертає.
   export function showLoadMoreButton() {
     loadMore.classList.remove('hidden');
   }
-
+//функція нічого не приймає, повинна прибирати клас для відображення кнопки Load more. Нічого не повертає.
   export function hideLoadMoreButton() {
     loadMore.classList.add('hidden');
   }

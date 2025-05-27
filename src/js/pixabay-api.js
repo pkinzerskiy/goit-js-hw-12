@@ -2,11 +2,10 @@
 
 import axios from "axios";
 const myKey = "49810610-79c0179868d457ece08d99a45";
-// import { PER_PAGE } from "./../main.js";
 
 export async function getImagesByQuery({query, page, PER_PAGE}) {
-    console.log("query",PER_PAGE );
-   return await axios("https://pixabay.com/api/", {
+    //console.log("query",PER_PAGE );
+   let response = await axios("https://pixabay.com/api/", {
         params: {
             key: myKey,
             q: query,
@@ -16,6 +15,7 @@ export async function getImagesByQuery({query, page, PER_PAGE}) {
             orientation: 'horizontal',
             safesearch: true
         }
-    })
+   })
+    return (response.data);
 }
 
